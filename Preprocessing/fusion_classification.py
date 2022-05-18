@@ -15,7 +15,8 @@ import cv2
 import csv 
 
 torch.cuda.empty_cache()
-
+data_final = open('resultat_final.csv', 'w')
+writer_final = csv.writer(data_final)
 data_csv = open('resultats.csv','w')
 writer = csv.writer(data_csv)
 
@@ -121,8 +122,9 @@ class NeuralNetwork(nn.Module):
 
 
 if __name__ == "__main__":
-    liste_fichier = ['bas_gauche','haut_droit']
+    liste_fichier = ['bas_gauche','haut_droit','haut_gauche','haut_haut_gauche']
     dict_class = {}
+    dict_resultat = {}
     for i in liste_fichier:
         idx = 0
         model = NeuralNetwork().cuda()
@@ -137,6 +139,10 @@ if __name__ == "__main__":
                 for j in range (len(pred)):
                     if X['nom'][j] not in dict_class.keys():
                         dict_class[X['nom'][j]] = list()
+                        dict_resultat[X['nom'][j]] = [i]+pred[j].tolist()
                     dict_class[X['nom'][j]].append([i]+pred[j].tolist())
+                    if pred[j].tolist()[1]> dict_resultat[X['nom'][j]][2]:
+                         dict_resultat[X['nom'][j]] = [i]+pred[j].tolist()                       
     for i in dict_class:
         writer.writerow([i,dict_class[i][0],dict_class[i][1]])
+        writer_final.writerow([i,dict_resultat[i][0])
