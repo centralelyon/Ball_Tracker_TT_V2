@@ -250,11 +250,9 @@ if __name__ == "__main__":
         model = NeuralNetworkTrack().cuda()
         model.load_state_dict(torch.load(os.path.join(i,'weights_track','best_model.pth')))
         model.eval()
-        print(f"resultats_{i}")
         batch = DataLoader(data_set_track(i,transform), batch_size=10, shuffle = False)
         with torch.no_grad():
             for batch, X in enumerate(batch):
-                print(i)
                 pred = model(X['image'])
                 pred = pred.cpu()
                 pred = pred.numpy()
