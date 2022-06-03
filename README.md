@@ -17,3 +17,13 @@ Les images sont séparées en tiles : en effet l'image de base est de 1920x1080 
 
 L'algorithme se décompose en 2 réseaux de neurones : Le premier permet de détecter si une image contient une balle ou non (vision globale), il s'agit alors d'un problème de classification.
 Le deuxième réseau de neurones permet de trouver les coordonées de la balle dans l'image (vision locale), il s'agit alors d'un problème de regresssion.
+
+<h2>Installation</h2>
+
+Dans un premier temps faite le preprocessing de votre dataset d'images, vous pouvez utiliser <b>background_substraction</b> code qui permet d'enlever l'arrière plan statique de vos images.
+
+Ensuite il faut utiliser <b>cropping_resized_image</b> qui permet de decouper nos images selon les coordonées qui vont bien (pensez à bien créer vos dossiers pour recevoir les images croppoés :"haut_gauche", "bas_gauche", "haut_haut_gauche", "haut_droit".
+
+Lorsque ces images sont téléchargées sur vos dossiers, il faut entrainer les réseaux de neurones <b>pour chaque tuile différente !</b>, sauvegardez vos meilleurs poids dans un dossier "weights" et "weights_tracking"
+
+Il suffit ensuite de lancer le code "fusion_classification" afin d'obtenir les résultats, une visualation graphique est possible avec "generate_image_test"
